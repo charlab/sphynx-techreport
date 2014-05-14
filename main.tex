@@ -2,6 +2,15 @@
 
 \usepackage[normalem]{ulem}
 
+% Comment commands - easy to remove
+\usepackage{color}
+\definecolor{orange}{rgb}{1,0.5,0}
+\newcommand{\jbs}[1]{{\color{blue}[\textbf{\sc JBS}: \textit{#1}]}} %Josef
+\newcommand{\dhp}[1]{{\color{red}[\textbf{\sc DMK}: \textit{#1}]}} %Dong-hyeon
+\newcommand{\ab}[1]{{\color{magenta}[\textbf{\sc ELB}: \textit{#1}]}}%Akhil
+\newcommand{\fh}[1]{{\color{orange}[\textbf{\sc ALD}: \textit{#1}]}}  %Fabiha
+\newcommand{\es}[1]{{\color{green}[\textbf{\sc ALD}: \textit{#1}]}}  %Eric
+
 \begin{document}
 
 \title{Sphynx: A Shared Instruction Cache Exporatory Study}
@@ -21,9 +30,8 @@
 \input{01-intro.tex}
 \input{02-background.tex}
 \input{03-arch.tex}
-\input{04-methodology.tex}
-\input{05-results.tex}
-\input{06-conclusions.tex}
+\input{04-results.tex}
+\input{05-conclusions.tex}
 
 \bstctlcite{bstctl:etal, bstctl:nodash, bstctl:simpurl}
 \bibliographystyle{IEEEtranS}
