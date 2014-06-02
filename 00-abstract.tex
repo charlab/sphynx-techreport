@@ -2,7 +2,15 @@ The Sphynx project was an exploratory study to discover what might be
 done to improve the heavy replication of instructions in independent
 instruction caches for a massively parallel machine where a single
 program is executing across all of the cores. 
-It is expected that a large amount of sharing should be possible when
-the independent threads all issue from the same instruction pool.
-Ideally a large amount of sharing should be possible, where a single
-instruction cache can be shared among $N$ threads, where $N\geq 2$.
+While a machine with only many cores (fewer than 50) might not have
+any issues replecating the instructions for each core, as we approach
+the era where thousands of cores can be placed on one chip, the
+overhead of instruction replecation may become unacceptably large.
+We believe that a large amount of sharing should be possible when the
+machine is configured for all of the threads to issue from the same
+set of instructions.
+We propose sharing a single instruction cache among a group of threads
+by providing independent reads as long as the threads access different
+cache banks.
+\jbs{Need to add a better summary of the proposed technique once it's
+written.}
