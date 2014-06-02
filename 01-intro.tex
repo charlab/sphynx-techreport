@@ -3,8 +3,12 @@
 \jbs{I expect this entire paper to be about 3-4 pages. We should be clear
 and concise, but still put all our ideas down.}
 
-We developed some ideas and used GPGPU-Sim~\cite{bakhodayuan09}.
+Instruction caches are widely used to mediate the effects of reads from main memory, relative to computation time. The instruction cache is accessed for every every instruction executed and program execution time can vary widely depending on the number of instruction misses~\cite{arnold94}. In existing Graphics Processing Units (GPUs), each streaming multiprocessor\es{I believe streaming multiprocessor is an NVIDIA-specific term, is there a generic term?} has an instruction cache. A unified instruction cache that is used by all cores of a GPU has the potential to improve system performance and reduce power consumption. Unlike data caches which can be read from and written to, an instruction cache is only read from, which means there is less possibility for conflict in the cache. In current GPU architectures, the instruction caches are independent of one another, however since each streaming multiprocessor uses the same set of instructions, it is plausible that a unified instruction cache could introduce non-trivial improvements in performance. A single instruction cache could reduce the number of compulsory misses because an instruction previously executed by one streaming multiprocessor may be available for another streaming multiprocessor. 
 
+GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package available to simulate GPU architecture. It has been verified for many GPUs and provides a reasonable platform for testing alternate GPU architectures.
+
+
+\es{This is the end of the introduction, but I will leave the stuff below in case someone else needs these examples.}
 Here's an example table in Table~\ref{table:example}.
 
 \begin{table}[h!]
