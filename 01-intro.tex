@@ -3,9 +3,19 @@
 \jbs{I expect this entire paper to be about 3-4 pages. We should be clear
 and concise, but still put all our ideas down.}
 
-Instruction caches are widely used to mediate the effects of reads from main memory, relative to computation time. The instruction cache is accessed for every every instruction executed and program execution time can vary widely depending on the number of instruction misses~\cite{arnold94}. In existing Graphics Processing Units (GPUs), each streaming multiprocessor\es{I believe streaming multiprocessor is an NVIDIA-specific term, is there a generic term?} has an instruction cache. A unified instruction cache that is used by all cores of a GPU has the potential to improve system performance and reduce power consumption. Unlike data caches which can be read from and written to, an instruction cache is only read from, which means there is less possibility for conflict in the cache. In current GPU architectures, the instruction caches are independent of one another, however since each streaming multiprocessor uses the same set of instructions, it is plausible that a unified instruction cache could introduce non-trivial improvements in performance. A single instruction cache could reduce the number of compulsory misses because an instruction previously executed by one streaming multiprocessor may be available for another streaming multiprocessor. 
+Instruction caches are widely used to mediate the effects of reads from main memory, relative to computation time. 
+The instruction cache is accessed for every instruction executed and program execution time can vary widely depending on the number of instruction cache misses~\cite{arnold94}. 
+In existing Graphics Processing Units (GPUs) and CPUs, each processor core has its own instruction cache. 
+A unified or shared instruction cache that is used by all, or many cores of a GPU or CPU has the potential to improve system performance and reduce power consumption\jbs{, however the increased traffic could lead to a higher miss rate, reducing performance and increasing power consumption}. 
+\jbs{The previous sentence is really mutilated from my edit. Needs work.}
+Unlike data caches which can be read from and written to, an instruction cache is only read, which means there is less possibility for conflict in the cache.
+\jbs{I'm not sure less conflict is the right conclusion to read only...} 
+In current computer architectures, the instruction caches are independent of one another, however since each processor uses the same set of instructions, it is plausible that a shared instruction cache could introduce non-trivial improvements in performance. 
+A single instruction cache could reduce the number of compulsory misses because an instruction previously executed by one streaming multiprocessor may be available for another streaming multiprocessor immediately rather than requiring an additional miss. 
 
-GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package available to simulate GPU architecture. It has been verified for many GPUs and provides a reasonable platform for testing alternate GPU architectures.
+GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package available to simulate GPU architecture. 
+It has been validated to be representative of performance on NVIDIA GPUs and provides a reasonable platform for testing alternate highly-parallel computer architectures.
+\jbs{This discussion seems more fitted to the methodology part of the results section.}
 
 
 \es{This is the end of the introduction, but I will leave the stuff below in case someone else needs these examples.}
