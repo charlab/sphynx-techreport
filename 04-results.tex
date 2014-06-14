@@ -93,7 +93,11 @@ Figure \ref{fig:missStalls} shows the results of our experiment.
 \begin{figure}[b!]
 \centering
 \includegraphics[width=90mm]{miss_stalls_benchmarks.png}
-\caption{Miss and Stall Rates for Benchmark Programs with the GTX580}
+\caption{Miss and Stall Rates for Benchmark Programs with the GTX580
+\jbs{Are the numbers (1-4) the same here as for
+  Figure~\ref{HitImprov}? Why is this miss rate when the others are
+hit rate? We should unify the presentation.}
+}
 \label{fig:missStalls}
 \end{figure}
 
@@ -123,40 +127,43 @@ work elements that each program issues to the GPU when executing in
 hardware. 
 The following calculations have been derived from the CUDA source
 files and are a representation of the level of parallelism employed by
-2 programs which we found interesting as per our previous results. \\
+2 programs which we found interesting as per our previous results.
 
-\emph{RAY}\\
+\jbs{I'm not sure the following information is presented in the best
+  way. We should at least make the two benchmarks consistent in their
+  presentation.}
 
-Number of threads in each block $= 16 \times 8 = 128$ threads
+\emph{RAY (Ray tracing)}
+\begin{align*}
+ThreadsPerBlock& = 16 \times 8\\
+& = 128\\
+Blocks& = (64/16, 64/8)\\
+& = (4,8)\\
+BlocksPerQueue& = 4 \times 8\\
+& = 32.\\
+\end{align*}
 
-Number of thread blocks $= (64/16, 64/8) = (4,8)$
+\emph{CP (Coulombic Potential)}
 
-Thus, number of thread blocks in a queue at any given time $= 4 \times 8 = 32.$
-\\
+\begin{align*}
+ThreadsPerBlock& = 16 \times 8\\
+& = 128\\
+VOLSIZEX& = 512\\
+VOLSIZEY& = 512\\
+BLOCKSIZEX& = 16\\
+BLOCKSIZEY& = 8\\
+UNROLLX&  = 1\\
+GridSizeX& = Gsz.x\\& = 512/16\\& = 32\\
+GridSizeY& = Gsz.y\\& = 512/8\\& = 64\\
+GridSizeZ& = UNROLLX\\& = 1\\
+\end{align*}
 
-\emph{Coulombic Potential (CP)}\\
-
-Number of threads in each block $= 16 \times 8 = 128$ threads.
-
-VOLSIZEX $= 512$
-
-VOLSIZEY $= 512$
-
-BLOCKSIZEX $= 16$
-
-BLOCKSIZEY $= 8$
-
-UNROLLX  $= 1$
-
-Grid Size in the x dimension $= Gsz.x = 512/16 = 32$
-
-Grid Size in the y dimension $= Gsz.y = 512/8 = 64$
-
-Grid Size in the z dimension $=$ UNROLLX $= 1$
-
-Thus the number of thread blocks issued $= (32, 64)$
-
-and the number of blocks in the queue at a given point in time $= 32 \times 64 = 2048$ thread blocks.
+Thus the number of thread blocks issued and the number of blocks in
+the queue at a given point in time are given by:
+\begin{align*}
+BlocksIssued& = (32, 64)\\
+BlocksPerQueue& = 32 \times 64\\& = 2048\\
+\end{align*}
 
 The reason only the parallelism of CP and RAY were examined was that
 from a preliminary inspection, they seemed to having a desired
