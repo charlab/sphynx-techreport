@@ -8,22 +8,25 @@
 \label{propDesign}
 \end{figure}
 
-The architectural design associated with moden GPU's is one in which
-each core in the GPU has access to its own instruction cache. 
+Most computer architectures build an independent instruction cache for
+each processing core.
 Reducing the number of instruction caches for the same number of cores
-in a streaming multiprocessor has certain advantages. 
-First, using a shared instruction cache design we could reduce the
-number of compulsory misses because an instruction previously executed
-by one streaming multiprocessor may be available for another streaming
-multiprocessor immediately rather than requiring an additional miss. 
+in a multi-core processor has certain advantages. 
+First, a shared instruction cache design could reduce the number of
+compulsory misses because an instruction previously fetched
+by one processor may be available for another processor immediately
+rather than requiring an additional cache miss. 
+However, the sharing of a single cache among multiple threads will
+increase the pressure to that cache, and require additional read ports
+for each processor.
+\jbs{not sure about the following sentence. It needs justification.}
 We hypothesized that sharing an instruction cache would result in
 increased efficiency and fewer cache misses. 
-Figure~\ref{propDesign} shows the current design explaining the
-interaction between GPUs and instruction caches, the proposed design
-of sharing an instruction cache over multiple (but not all) cores in
-the streaming multiporocessor and the last design ennumerates the
-proposed design of a \emph{single} instruction cache to be shared by
-all the cores on the steaming multiprocessor.
+Figure~\ref{propDesign} shows a traditional instruction cache
+arrangement, the proposed design of sharing an instruction cache over
+multiple (but not all) cores on a chip, and the last design extends
+that sharing to the logical limit where a \emph{single} instruction
+cache to be shared by all the cores on a chip.
  
 
 
