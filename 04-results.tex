@@ -4,9 +4,9 @@ The simulation was conducted in GPGPU-Sim for NVIDIA Fermi GPU architecture \cit
 
 \begin{figure}[ht!]
 \centering
+\label{GTX580}
 \includegraphics[width=90mm]{GTX580.jpg}
 \caption{Block Diagram of Default GTX580. There are 16 SIMT Cores, all sharing a common L2 cache. Each SIMT Core contains a separate L1 cache.}
-\label{GTX580}
 \end{figure}
 
 In the original Fermi architecture, each streaming multiprocessor has its own distinct L1 cache. Each L1 instruction cache is a 4-way set associative, with 4 sets of 128 bytes blocks. To assess the  performance of different L1 instruction cache architecture, only the L1 instruction cache was modified, while all other variables remained constant. Other aspects of the architecture such as the bandwidth of shared L2 cache could serve as a performance bottleneck for different cache designs. However, these variables are assumed to have little impact on the hit and stall rate of the instruction cache, which are the primary metrics of interest.
@@ -15,9 +15,9 @@ The simulation results of are expected to show two optimization approaches in im
 
 \begin{figure}[t]
 \centering
+\label{HitImprov}
 \includegraphics[width=90mm]{HitRateImprov.png}
 \caption{Projected Improvement in Hit Rate. Total size of the instruction cache remains constant. Size of individual instruction cache is scaled proportionally to the number of cores that share the cache.}
-\label{HitImprov}
 \end{figure}
 
 
@@ -40,17 +40,17 @@ Several benchmark programs were used in this project. These benchmarks included 
 \centering
 \includegraphics[width=90mm]{miss_stalls_benchmarks.png}
 \caption{Miss and Stall Rates for Benchmark Programs with the GTX580}
-\label{missStalls}
+\label{fig:missStalls}
 \end{figure}
-
-Figure \ref{fig:missStallsZoomed} is a zoomed in version of \ref{fig:missStalls} included to enable better understanding of the results with lower miss rates. 
 
 \begin{figure}[b!]
 \centering
 \includegraphics[width=90mm]{miss_stalls_benchmarks_zoomed.png}
 \caption{Miss and Stall Rates for Benchmark Programs with GTX580 (Zoomed In) }
-\label{missStallsZoomed}
+\label{fig:missStallsZoomed}
 \end{figure}
+
+Figure \ref{fig:missStallsZoomed} is a zoomed in version of \ref{fig:missStalls} included to enable better understanding of the results with lower miss rates. 
 
 The benchmark STO is hardly affected by this and RAY has a much higher stall rate (indicating more reservation fails than misses) than its miss rates, and is relatively very affected. RAY did have a bit more variability in how it was affected by the core numbers.
 
@@ -60,16 +60,16 @@ The degree of parallism is a representation of the number of software work eleme
 
 \emph{RAY}\\
 
-Number of threads in each block $= 16 x 8 = 128 threads$
+Number of threads in each block $= 16 \times 8 = 128$ threads
 
 Number of thread blocks $= (64/16, 64/8) = (4,8)$
 
-Thus, number of thread blocks in a queue at any given time $= 4 x 8 = 32.$
+Thus, number of thread blocks in a queue at any given time $= 4 \times 8 = 32.$
 \\
 
 \emph{Coulombic Potential (CP)}\\
 
-Number of threads in each block $= 16 x 8 = 128 threads.$
+Number of threads in each block $= 16 \times 8 = 128$ threads.
 
 VOLSIZEX $= 512$
 
@@ -85,11 +85,11 @@ Grid Size in the x dimension $= Gsz.x = 512/16 = 32$
 
 Grid Size in the y dimension $= Gsz.y = 512/8 = 64$
 
-Grid Size in the z dimension $= UNROLLX = 1$
+Grid Size in the z dimension $=$ UNROLLX $= 1$
 
 Thus the number of thread blocks issued $= (32, 64)$
 
-and the number of blocks in the queue at a given point in time $= 32 x 64 = 2048 thread blocks.$
+and the number of blocks in the queue at a given point in time $= 32 \times 64 = 2048$ thread blocks.
 
 The reason only the parallelism of CP and RAY were examined was that from a preliminary inspection, they seemed to having a desired combination of parallelism and size of instruction set. 
 
@@ -97,7 +97,7 @@ From all the aforementioned results, it was clear that RAY was the most interest
 
 Increasing the degree of parallelism in software entailed changing the image size that the Ray Tracer would operate on and the number of thread blocks (and consequently the number of threads in the queue at a given time). The following are the calculations related to the tweaked version of RAY which serves as an indicator of the degree of parallelism with which RAY executes on the GPU:
 
-Number of threads in each block $= 16 x 8 = 128 threads$
+Number of threads in each block $= 16 x 8 = 128$ threads
 
 Number of thread blocks issued $= (512/16, 512/8) = (32, 64)$
 
