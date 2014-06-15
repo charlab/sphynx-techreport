@@ -1,10 +1,5 @@
 \section{Conclusions}
 
-\jbs{Dong-hyeon in charge}
+The proposed instruction cache designs provide a possible solution to increase the efficiency of instruction cache in GPGPUs. The sharing of instruction cache amongst multiple GPU cores can help designers optimize for less area and better performance. The extra space recovered from the sharing of instruction cache among multiple GPU cores can be repurposed to improve other parts of the GPU, such as a larger data cache.
 
-Describe the take away from our proposed work direction.
-
-Future work.
-
-Other thoughts?
-
+For future work, the proposed instruction cache design should be simulated and tested to verify the affectiveness of the design. The different cache architecture parameters that are expected to affect ther performance of instruction cache design are number of cores sharing the cache, associativity and size of the cache, are expected to affect the performance of the instruction cache design. Extensive testing of such parameters should be conducted to determine the most optimal instruction cache design for common workloads. The proposed design is expected to perform the best on multi-threaded applications with large amount of redundant instructions, so the drawbacks of running non-redundant code should also be considered.
