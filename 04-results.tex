@@ -204,3 +204,32 @@ instructions with a high degree of parallelism.
 \subsection{Preliminary Results}
 \jbs{Fabiha in charge}
 
+The performed simulations point to several factors that may account 
+for the outcomes seen with each approach. Parameters that are expected 
+to affect instruction cache performance include the number of cores 
+shared, associativity, parallelism, and cache size.
+
+The first method, varying the number of cores sharing a cache while 
+keeping the total cache size constant, was expected to improve the hit 
+rate. As the number of cores sharing the cache increased, the miss rate 
+and stall rate both increased, with the later increasing more rapidly 
+due to the higher number of reservation fails. While the hit rate may 
+have improved, there was an overall trend of increased reservation fails 
+because the cache was preoccupied with instructions from the greater 
+number of cores. As an exception to this, CP demonstrated a balance as 
+the stall rate decreased going from 8 cores to 16 cores sharing the 
+cache. This was most likely due to the higher level of parallelism that 
+CP had in comparison to the other benchmarks. Meanwhile, smaller programs 
+remained unaffected more often than larger benchmarks.
+
+The second approach entailed reducing the total cache size by keeping 
+the size of each individual instruction cache constant when merging the 
+cores that share each one. The reduction in area of the now shared cache 
+allowed duplicate instructions to be accessed more quickly. This 
+affected benchmarks with many reused instructions and is expected to 
+provide space to be used for other caches.
+
+Overall, these methods appear to perform best on multi-threaded 
+applications with many reused instructions. Meanwhile, for benchmarks 
+with higher hit rates to begin with, and thus less reservation fails, 
+this method made less of an impact.
