@@ -1,18 +1,22 @@
 \section{Background}
 
-Background goes here. \jbs{Dong-hyeon in charge of this.}
+
+
+Instruction cache is an important aspect of a processor's performance. There have been lot of work in the past in improving the performance of instruction cache  CPUs. Techniques such as advanced branch prediction and replacement policies have contributed to the high performance of instructin cache in modern CPUs. However, such techniques are not easily applicable to the general-purpose GPUs that are emerging today. 
+
+Modern general-purpose GPUs are designed to have several compute units to maximize throughput. These compute units are compact, and designed to perform simple operations on a large set of data. It is not feasible to implement techniques such as advanced branch prediction on these compute units, a single GPU can have upto a hundred of these compute units. To improve the instruction cache performance of GPUs, new solutions need to be developed in ways that maintain the compact and simplistic nature of the compute units.
+
+\jbs{Still in progress}
+
 
 \jbs{tentative citation list:}
 \begin{itemize}
 \item ILP focussed I-Cache~\cite{yeh93}
-\item Future GPUs~\cite{keckler11} \jbs{Someone needs to read parts
+\item Future GPUs~\cite{keckler2011} \jbs{Someone needs to read parts
   of this. Table 3 shows how they expect instruction caches to be
   arranged. \url{http://www.davidglasco.com/Papers/ieee-micro.pdf}}
 \item Old paper on I-Cache policies~\cite{smith85} \jbs{Someone should
   skim this if possible.}
 \item Another old paper~\cite{smith83} \jbs{same authors as
   above. Probably much of the same. Again skim only}
-\item ISPC~\cite{pharr12} \jbs{A SPMD compiler, but has intersting
-  stuff on programmer vs. architect's view of parallel~\url{http://pharr.org/matt/talks/uiuc-ispc-2012.pdf}}
 \end{itemize}
-
