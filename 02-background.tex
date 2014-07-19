@@ -1,11 +1,9 @@
 \section{Background}
 
+Instruction cache can have a large impact in a processor's performance. There have been lot of work in the past in improving the performance of instruction cache  CPUs. Techniques such as advanced branch prediction\cite{yeh93} and replacement policies\cite{smith85} have contributed to the high performance of instructin cache in modern CPUs. However, such techniques are not easily applicable to the general-purpose GPUs that are emerging today. 
 
 
-Instruction cache is an important aspect of a processor's performance. There have been lot of work in the past in improving the performance of instruction cache  CPUs. Techniques such as advanced branch prediction and replacement policies have contributed to the high performance of instructin cache in modern CPUs. However, such techniques are not easily applicable to the general-purpose GPUs that are emerging today. 
-
-Modern general-purpose GPUs are designed to have several compute units to maximize throughput. These compute units are compact, and designed to perform simple operations on a large set of data. It is not feasible to implement techniques such as advanced branch prediction on these compute units, a single GPU can have upto a hundred of these compute units. To improve the instruction cache performance of GPUs, new solutions need to be developed in ways that maintain the compact and simplistic nature of the compute units.
-
+Modern general-purpose GPUs are designed to have several compute units to maximize throughput. These compute units are compact, and designed to perform simple operations on a large set of data. It is not feasible to implement techniques such as advanced branch prediction on these small compute units, beccause a single GPU unit can have upto a couple hundred of these compute units. To improve the instruction cache performance of GPUs, new solutions need to be developed in ways that maintain the compact and simplistic nature of the compute units. Current GPU architectures are designed with individual L1 instruction cache for each compute unit of the GPU\cite{keckler2011}. It may be possible have multiple compute units share the same instruction cache without incurring serious performance or power penalties.
 \jbs{Still in progress}
 
 
