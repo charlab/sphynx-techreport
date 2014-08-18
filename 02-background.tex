@@ -1,6 +1,39 @@
 \section{Background}
 
-Instruction cache can have a large impact in a processor's performance. There have been lot of work in the past in improving the performance of instruction cache  CPUs. Techniques such as advanced branch prediction\cite{yeh93} and replacement policies\cite{smith85} have contributed to the high performance of instructin cache in modern CPUs. However, such techniques are not easily applicable to the general-purpose GPUs that are emerging today. 
+Instruction cache can have a large impact in a processor's
+performance. 
+There have been lot of work in the past in improving the performance
+of instruction cache  CPUs. 
+Techniques such as advanced branch prediction~\cite{yeh93} and
+replacement policies~\cite{smith85} have contributed to the high
+performance of instruction cache in modern CPUs. 
+It has even been shown that system performance can increase by 10-20\%
+just by adjusting the operating system to use the instruction cache
+efficiently~\cite{torrellas98}.
+While all of these approaches are useful, the future of computing
+includes very large numbers of independent processor cores integrated
+on one chip.
+While general purpose CPUs are likely to include hundreds of cores at
+some point in the future, a good example to consider today is the GPU,
+which already exposes hundreds to thousands of threads to the
+programmer. 
+
+Modern Graphics Processing Units (GPUs) are designed to have several
+compute units to maximize throughput, and to expose these compute
+units for general purpose computation instead of only graphics
+applications.
+These compute units are compact, and designed to perform simple
+operations on a large set of data. 
+It is not feasible to implement techniques such as advanced branch
+prediction on these small compute units, beccause a single GPU unit
+can have upto a couple hundred of these compute units. 
+To improve the instruction cache performance of GPUs, new solutions
+need to be developed in ways that maintain the compact and simplistic
+nature of the compute units. 
+Current GPU architectures are designed with individual L1 instruction
+cache for each compute unit of the GPU\cite{keckler11}. 
+It may be possible have multiple compute units share the same
+instruction cache without incurring serious performance or power
+penalties.
 
 
-Modern general-purpose GPUs are designed to have several compute units to maximize throughput. These compute units are compact, and designed to perform simple operations on a large set of data. It is not feasible to implement techniques such as advanced branch prediction on these small compute units, beccause a single GPU unit can have upto a couple hundred of these compute units. To improve the instruction cache performance of GPUs, new solutions need to be developed in ways that maintain the compact and simplistic nature of the compute units. Current GPU architectures are designed with individual L1 instruction cache for each compute unit of the GPU\cite{keckler2011}. It may be possible have multiple compute units share the same instruction cache without incurring serious performance or power penalties.

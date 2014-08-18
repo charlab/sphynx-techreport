@@ -1,18 +1,35 @@
 \section{Introduction}
 
-\jbs{I expect this entire paper to be about 3-4 pages. We should be clear
-and concise, but still put all our ideas down.}
+%% \jbs{I expect this entire paper to be about 3-4 pages. We should be clear
+%% and concise, but still put all our ideas down.}
 
-Instruction caches are widely used to mediate the effects of reads from main memory, relative to computation time. 
-The instruction cache is accessed for every instruction executed and program execution time can vary widely depending on the number of instruction cache misses~\cite{arnold94}. 
-In existing Graphics Processing Units (GPUs) and CPUs, each processor core has its own instruction cache. 
-A unified or shared instruction cache that is used by all, or many cores of a GPU or CPU has the potential to improve system performance and reduce power consumption.
-However, such a modification also results in increased traffic for the instruction cache, which could lead to a higher miss rate, reducing performance and increasing power consumption. 
-In current computer architectures, the instruction caches are independent of one another, however since each processor uses the same set of instructions, it is plausible that a shared instruction cache could introduce non-trivial improvements in performance. 
-Unified instruction cache(s) could reduce the number of compulsory misses because an instruction previously executed by one streaming multiprocessor may be available for another streaming multiprocessor immediately rather than requiring an additional miss. 
-In addition to a fully unified instruction cache used across all processor cores, another possible solution could be to maintain multiple instruction caches, which are shared across a subset of all cores. 
-This architecture could allow the operating system to group together program threads based on similarity of instructions to maximize the benefit of shared instructions and minimized the conflicts across threads. 
+Instruction caches are widely used to mediate the effects of reads
+from main memory, relative to computation time. 
+The instruction cache is accessed for every instruction executed and
+program execution time can vary widely depending on the number of
+instruction cache misses~\cite{arnold94}. 
+In existing Graphics Processing Units (GPUs) and CPUs, each processor
+core has its own instruction cache. 
+A unified or shared instruction cache that is used by all, or many
+cores of a GPU or CPU has the potential to improve system performance
+and reduce power consumption.
+However, such a modification also results in increased traffic for the
+instruction cache, which could lead to a higher miss rate, reducing
+performance and increasing power consumption. 
+In current computer architectures, the instruction caches are
+independent of one another, however since each processor uses the same
+set of instructions, it is plausible that a shared instruction cache
+could introduce non-trivial improvements in performance. 
+Unified instruction cache(s) could reduce the number of compulsory
+misses because an instruction previously executed by one streaming
+multiprocessor may be available for another streaming multiprocessor
+immediately rather than requiring an additional miss. 
+In addition to a fully unified instruction cache used across all
+processor cores, another possible solution could be to maintain
+multiple instruction caches, which are shared across a subset of all
+cores. 
+This architecture could allow the operating system to group together
+program threads based on similarity of instructions to maximize the
+benefit of shared instructions and minimized the conflicts across
+threads. 
 
-GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package available to simulate GPU architecture. 
-It has been validated to be representative of performance on NVIDIA GPUs and provides a reasonable platform for testing alternate highly-parallel computer architectures.
-\jbs{This discussion seems more fitted to the methodology part of the results section.}
