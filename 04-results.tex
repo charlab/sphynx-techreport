@@ -23,26 +23,29 @@ highly-parallel computer architectures.
 \label{GTX580}
 \end{figure}
 
-In the original Fermi architecture, each streaming multiprocessor has
+In the Fermi architecture, each streaming multiprocessor has
 its own distinct L1 cache. 
-Each L1 instruction cache is a 4-way set associative, with 4 sets of
-128 bytes blocks. 
+Each L1 instruction cache is 4-way set associative, with 4 sets of
+128 bytes per block. 
 To assess the  performance of different L1 instruction cache
-architecture, only the L1 instruction cache was modified, while all
-other variables remained constant. 
+architectures, only the L1 instruction cache was modified, while all
+other architectural variables remained constant. 
 Other aspects of the architecture such as the bandwidth of shared L2
 cache could serve as a performance bottleneck for different cache
 designs. 
-However, these variables are assumed to have little impact on the hit
-and stall rate of the instruction cache, which are the primary metrics
-of interest.
+However, these variables are ignored for this study, because we expect
+them to have little impact on the hit and stall rate of the
+instruction cache, which are the primary metrics of interest.
 
-The simulation results of are expected to show two optimization
-approaches in improving instruction cache performance by sharing
+\jbs{It isn't clear to me whether the following paragraph is
+  theoretical results, or actual simulated results.}
+
+The simulation results show two optimization
+approaches in improving instruction cache performance by having
 multiple GPU cores share the cache. 
 One approach is to keep the total instruction cache size constant and
-improve the performance of the cache, as shown in Figure
-\ref{HitImprov}. 
+improve the performance of the cache, as shown in
+Figure~\ref{HitImprov}. 
 In this approach, when multiple cores are configured to share the same
 instruction cache, the previous cache that existed with each core are
 merged together to form larger caches. 
