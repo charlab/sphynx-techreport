@@ -36,4 +36,10 @@ It may be possible have multiple compute units share the same
 instruction cache without incurring serious performance or power
 penalties.
 
+As a side note, this idea for reducing the instruction cache area
+overhead by aggressively sharing the cache originally came from
+previous work on the TRaX architecture~\cite{spjut09,kopta10,spjut12}.
+The TRaX architecture was designed for parallel ray tracing and
+supports thousands of threads all running the same application but
+working on different pieces of data.
 

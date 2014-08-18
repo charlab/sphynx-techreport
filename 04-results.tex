@@ -18,7 +18,7 @@ highly-parallel computer architectures.
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=90mm]{graphics/GTX580.jpg}
+\includegraphics[width=\columnwidth]{graphics/GTX580.jpg}
 \caption{Block Diagram of Default GTX580~\cite{gf100}. There are 16 SIMT Cores, all sharing a common L2 cache. Each SIMT Core contains a separate L1 cache.}
 \label{GTX580}
 \end{figure}
@@ -55,7 +55,7 @@ improvement when the hit rate at a high level.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=90mm]{graphics/HitRateImprov.png}
+\includegraphics[width=\columnwidth]{graphics/HitRateImprov.png}
 \caption{Projected Improvement in Hit Rate. Total size of the instruction cache remains constant. Size of individual instruction cache is scaled proportionally to the number of cores that share the cache.}
 \label{HitImprov}
 \end{figure}
@@ -63,7 +63,7 @@ improvement when the hit rate at a high level.
 
 \begin{figure}[b!]
 \centering
-\includegraphics[width=90mm]{graphics/AreaEff.png}
+\includegraphics[width=\columnwidth]{graphics/AreaEff.png}
 \caption{Projected Improvement in Area Efficiency. Size of individual instruction cache remains constant, while the number of cores sharing the L1 cache is increased. The instruction redundancy between the cores should allow cache hit rate to remain high as cache area is reduced. }
 \label{AreaEff}
 \end{figure}
@@ -98,7 +98,7 @@ Figure \ref{fig:missStalls} shows the results of our experiment.
 
 \begin{figure}[b!]
 \centering
-\includegraphics[width=90mm]{graphics/miss_stalls_benchmarks.png}
+\includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks.png}
 \caption{Miss and Stall Rates for Benchmark Programs with the GTX580
 \jbs{Are the numbers (1-4) the same here as for
   Figure~\ref{HitImprov}? Why is this miss rate when the others are
@@ -109,7 +109,7 @@ hit rate? We should unify the presentation.}
 
 \begin{figure}[b!]
 \centering
-\includegraphics[width=90mm]{graphics/miss_stalls_benchmarks_zoomed.png}
+\includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks_zoomed.png}
 \caption{Miss and Stall Rates for Benchmark Programs with GTX580 (Zoomed In) }
 \label{fig:missStallsZoomed}
 \end{figure}
