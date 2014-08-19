@@ -122,11 +122,11 @@ Figure \ref{fig:missStallsZoomed} is a zoomed in version of
 \ref{fig:missStalls} included to enable better understanding of the
 results with lower miss rates. 
 
-The benchmark STO is hardly affected by this and RAY has a much higher
+The benchmark STO is mostly unaffected by this variation in the number of cores and RAY has a much higher
 stall rate (indicating more reservation fails than misses) than its
-miss rates, and is relatively very affected. 
-RAY did have a bit more variability in how it was affected by the core
-numbers.
+miss rates, and is evidently more susceptible to the aforementioned change. 
+
+RAY had more variability in how it was affected by the number of cores.
 
 In order to explain the reasons behind the results shown in Figures
 \ref{fig:missStalls} and \ref{fig:missStallsZoomed}, we examined the
@@ -135,13 +135,9 @@ degree of parallelism of RAY and CP.
 The degree of parallism is a representation of the number of software
 work elements that each program issues to the GPU when executing in
 hardware. 
-The following calculations have been derived from the CUDA source
-files and are a representation of the level of parallelism employed by
+Calculations on the number of issued work elements is a representation of the level of parallelism employed by
 2 programs which we found interesting as per our previous results.
 
-\jbs{I'm not sure the following information is presented in the best
-  way. We should at least make the two benchmarks consistent in their
-  presentation.}
 
 \emph{RAY (Ray tracing)}
 \begin{align*}
@@ -155,25 +151,7 @@ BlocksPerQueue& = 4 \times 8\\
 
 \emph{CP (Coulombic Potential)}
 
-\begin{align*}
-ThreadsPerBlock& = 16 \times 8\\
-& = 128\\
-VOLSIZEX& = 512\\
-VOLSIZEY& = 512\\
-BLOCKSIZEX& = 16\\
-BLOCKSIZEY& = 8\\
-UNROLLX&  = 1\\
-GridSizeX& = Gsz.x\\& = 512/16\\& = 32\\
-GridSizeY& = Gsz.y\\& = 512/8\\& = 64\\
-GridSizeZ& = UNROLLX\\& = 1\\
-\end{align*}
-
-Thus the number of thread blocks issued and the number of blocks in
-the queue at a given point in time are given by:
-\begin{align*}
-BlocksIssued& = (32, 64)\\
-BlocksPerQueue& = 32 \times 64\\& = 2048\\
-\end{align*}
+Given a standard configuration, CP issues 2048 thread blocks. This high number of thread blocks issed is a representation of the high degree of 
 
 The reason only the parallelism of CP and RAY were examined was that
 from a preliminary inspection, they seemed to having a desired
