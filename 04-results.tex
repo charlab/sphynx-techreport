@@ -132,26 +132,15 @@ In order to explain the reasons behind the results shown in Figures
 \ref{fig:missStalls} and \ref{fig:missStallsZoomed}, we examined the
 degree of parallelism of RAY and CP.
 
-The degree of parallism is a representation of the number of software
+The degree of parallelism is a representation of the number of software
 work elements that each program issues to the GPU when executing in
 hardware. 
 Calculations on the number of issued work elements is a representation of the level of parallelism employed by
 2 programs which we found interesting as per our previous results.
 
-
-\emph{RAY (Ray tracing)}
-\begin{align*}
-ThreadsPerBlock& = 16 \times 8\\
-& = 128\\
-Blocks& = (64/16, 64/8)\\
-& = (4,8)\\
-BlocksPerQueue& = 4 \times 8\\
-& = 32.\\
-\end{align*}
-
 \emph{CP (Coulombic Potential)}
 
-Given a standard configuration, CP issues 2048 thread blocks. This high number of thread blocks issed is a representation of the high degree of 
+Given a standard configuration, CP issues a high number of thread blocks -- a representation of the high degree of parallelism that CP takes advantage of.
 
 The reason only the parallelism of CP and RAY were examined was that
 from a preliminary inspection, they seemed to having a desired
@@ -165,18 +154,10 @@ Moreover, the fact that the degree of parallelism of RAY could be
 increased easily by modifying the CUDA program, we nominated RAY as
 our most significant benchmark program.
  
-
 Increasing the degree of parallelism in software entailed changing the
-image size that the Ray Tracer would operate on and the number of
-thread blocks (and consequently the number of threads in the queue at
-a given time). 
-The following are the calculations related to the tweaked version of RAY which serves as an indicator of the degree of parallelism with which RAY executes on the GPU:
-
-Number of threads in each block $= 16 x 8 = 128$ threads
-
-Number of thread blocks issued $= (512/16, 512/8) = (32, 64)$
-
-Thus the number of blocks in the queue at a given time $= 32 x 64 = 2048.$
+image size that the Ray Tracer would operate on.
+ 
+By increasing the size of the picture to 512 by 512, we made RAY issue a much higher number of thread blocks per unit time. 
 
 This ensured that the RAY benchmark was executing as parallel in
 software as the Coulombic Potential benchmark in the number of work
