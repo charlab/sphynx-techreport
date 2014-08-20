@@ -1,14 +1,12 @@
 \section{Results}
 
-The simulation was conducted in GPGPU-Sim for NVIDIA Fermi GPU
-architecture \cite{bakhodayuan09}. 
-GPGPU-Sim was configured to simulated the performance of
-GTX580~\cite{gf100}, with all 16 streaming multiprocessors enabled
-(each CUDA streaming multiprocessor is represented as a single SIMT
-Core in GPGPU-Sim). 
+The simulation was conducted in GPGPU-Sim to model the performance of NVIDIA GTX580\cite{bakhodayuan09}. 
+The GTX580 contains 16 streaming multiprocessors with Fermi GPU architecture. In GPGPU-Sim, each CUDA streaming multiprocessor is represented as a single SIMT core. 
 Each streaming multiprocressor contains 48 warps, with 32 threads per
 warp (See Figure \ref{GTX580}). 
 All sixteen SIMT cores share unified L2 cache.
+
+\subsection{Setup}
 
 GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package
 available to simulate GPU architecture. 
@@ -38,23 +36,20 @@ them to have little impact on the hit and stall rate of the
 instruction cache, which are the primary metrics of interest.
 
 \subsection{Projected Results}
-\jbs{It isn't clear to me whether the following paragraph is
-  theoretical results, or actual simulated results.}
 
-The simulation results show two optimization
-approaches in improving instruction cache performance by having
+There are two optimization approaches in improving instruction cache performance by having
 multiple GPU cores share the cache. 
 One approach is to keep the total instruction cache size constant and
-improve the performance of the cache, as shown in
-Figure~\ref{HitImprov}. 
+improve the performance of the cache.
 In this approach, when multiple cores are configured to share the same
 instruction cache, the previous cache that existed with each core are
 merged together to form larger caches. 
 The increased sized of the cache may result in degredation in access
-time, but improves the hit rate. 
+time, but in return, the hit rate of the cache is improved. 
 The hit rate of the cache is expected to improve greatly when the size
 of initial cache is doubled or tripled, but there will be less
-improvement when the hit rate at a high level.
+improvement when the hit rate at a high level. 
+The expected improvement in cache performance for keeping aggregate cache size constant is shown in Figure~\ref{HitImprov}. 
 
 
 \begin{figure}[t]
@@ -75,13 +70,13 @@ improvement when the hit rate at a high level.
 
 The second approach is to reduce the total size of the cache by
 keeping the size of individual instruction cache constant. 
-In this approach, rather than merging the shared caches together, the
-instruction caches are kept at the same size even if more cores are
-sharing the same core. 
+In this approach, rather than merging the shared caches together and creating one large cache, the size of the instruction shared by multiple cores are
+sharing the same cache. 
 The hit rate of the cache may drop when the instruction cache is not
 large enough to satisfy all the cores sharing the cache, but this drop
 in hit rate is expected to be less than the reduction in area due to
 the instruction redundancy between the shared cores.
+The expected performance of this optimization scheme is shown in Figure \ref{AreaEff}.
 
 
 \subsection{Benchmarks}
