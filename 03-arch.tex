@@ -8,7 +8,7 @@
 %% \label{propDesign}
 %% \end{figure}
 
-\begin{figure}[ht!]
+\begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/IndependentCaches}
 \caption{Independent instruction caches}
@@ -35,7 +35,7 @@ rather than requiring an additional cache miss.
 Again, this benefit is only relevant for single-application parallel
 workloads. 
 
-\begin{figure}[ht!]
+\begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/PairedCaches}
 \caption{Partly shared instruction caches}
@@ -62,13 +62,6 @@ by grouping different sets of compute cores differently and then
 assigning the application threads to the appropriate cores to match
 the sharing to the hardware available.
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=\columnwidth]{graphics/SharedCaches}
-\caption{Fully shared instruction caches}
-\label{fig:shared}
-\end{figure}
-
 While our proposed technique is likely only beneficial in situations
 with highly parallel programs, it is likely that future systems will
 often run a few highly parallel workloads that can benefit from these
@@ -78,6 +71,13 @@ advantages.
   would increase parallel cache performance.}
  
 
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\columnwidth]{graphics/SharedCaches}
+\caption{Fully shared instruction caches}
+\label{fig:shared}
+\end{figure}
 
 
 
