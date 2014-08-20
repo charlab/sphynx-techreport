@@ -1,25 +1,70 @@
 \section{Results}
 
-The simulation was conducted in GPGPU-Sim to model the performance of NVIDIA GTX580\cite{bakhodayuan09}. 
-The GTX580 contains 16 streaming multiprocessors with Fermi GPU architecture. 
-In GPGPU-Sim, each CUDA streaming multiprocessor is represented as a single SIMT core. 
-Each streaming multiprocressor contains 48 warps, with 32 threads per
-warp (See Figure \ref{GTX580}). 
-All sixteen SIMT cores share unified L2 cache.
+% expected results
+There are two methods for analyzing the potential gains from shared
+instruction caches.
+The first is to keep the total instruction cache size across the chip
+constant and increase the capacity each thread sees by grouping that
+storage together.
+This method of sharing will provide no area savings, but should grant
+an increased hit rate for the now larger cache.
+The increase will be limited by the working set of the application.
+We project improvement in cache performance for this approach in
+Figure~\ref{HitImprov}. 
+
+\begin{figure}[b]
+\centering
+\includegraphics[width=\columnwidth]{graphics/HitRateImprov.png}
+\caption{Projected instruction cache hit rate with fixed total cache size and increased sharing}
+\label{HitImprov}
+\end{figure}
+
+The second method is to reduce the total storage required for
+instruction cache data arrays while allowing at most a minor
+degredation in hit rate.
+We consider an approach where the instruction cache each processor
+sees remains fixed but the number of threads sharing each cache is
+increased. 
+We expect that the hit rate of the cache may drop when the instruction
+cache is not large enough to satisfy the demands from all the cores
+sharing the cache.
+However, the performance penalty should not be as dramatic as the
+reduction in area when all threads run the same application.
+Figure \ref{AreaEff} shows our rough expectations for this approach
+which should improve the efficiency of the chip.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{graphics/AreaEff.png}
+\caption{Projected cache area and hit rate due to increased sharing}
+\label{AreaEff}
+\end{figure}
 
 \subsection{Setup}
 
+We use GPGPU-Sim to analyze the effectiveness of our design because of
+its ability to simulate a large number of parallel processing cores.
 GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package
 available to simulate GPU architecture. 
 It has been validated to be representative of performance on NVIDIA
 GPUs and provides a reasonable platform for testing alternate
-highly-parallel computer architectures.
+highly-parallel computer architectures, and provides a reference
+configuration for a NVIDIA GTX580 GPU, which we used for our study.
+The GTX580 contains 16 streaming multiprocessors with the NVIDIA Fermi
+architecture. 
+In GPGPU-Sim, each CUDA streaming multiprocessor is represented as a
+single SIMT core. 
+Each streaming multiprocressor can have up to 48 warps, with 32
+threads per warp (See Figure \ref{GTX580}). 
+All sixteen SIMT cores share unified L2 cache.
 
-\begin{figure}[ht!]
+\jbs{What is the icache configuration?}
+
+
+\begin{figure}[b]
 \centering
 \includegraphics[width=\columnwidth]{graphics/GTX580.jpg}
-\caption{Block Diagram of Default GTX580~\cite{gf100}. There are 16 SIMT Cores, 
-all sharing a common L2 cache. Each SIMT Core contains a separate L1 cache.}
+\caption{Block Diagram of NVIDIA GTX580~\cite{gf100}}
 \label{GTX580}
 \end{figure}
 
@@ -37,65 +82,10 @@ However, these variables are ignored for this study, because we expect
 them to have little impact on the hit and stall rate of the
 instruction cache, which are the primary metrics of interest.
 
-\subsection{Projected Results}
-
-There are two optimization approaches in improving instruction cache performance by having
-multiple GPU cores share the cache. 
-One approach is to keep the total instruction cache size constant and
-improve the performance of the cache.
-In this approach, when multiple cores are configured to share the same
-instruction cache, the previous cache that existed with each core are
-merged together to form larger caches. 
-The increased sized of the cache may result in degredation in access
-time, but in return, the hit rate of the cache should improve due to
-the larger cache. 
-The hit rate of the cache is expected to improve greatly when the size
-of cache is doubled or tripled. However, we expect diminishing returns
-for higher scaling. 
-These projected improvement in cache performance for keeping aggregate cache size 
-constant is reflected in Figure~\ref{HitImprov}. 
-
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{graphics/HitRateImprov.png}
-\caption{Projected Improvement in Hit Rate. Total size of the instruction
-cache remains constant. Size of individual instruction cache is scaled 
-proportionally to the number of cores that share the cache.}
-\label{HitImprov}
-\end{figure}
-
-
-\begin{figure}[b!]
-\centering
-\includegraphics[width=\columnwidth]{graphics/AreaEff.png}
-\caption{Projected Improvement in Area Efficiency. Size of individual instruction 
-cache remains constant, while the number of cores sharing the L1 cache is increased.
-The instruction redundancy between the cores should allow cache hit rate to remain
-high as cache area is reduced. }
-\label{AreaEff}
-\end{figure}
-
-
-The second optimization approach is to reduce the total size 
-of the cache by keeping the size of individual instruction cache constant. 
-In this approach, rather than merging the shared caches together and 
-creating one large cache, the size of the shared cache is equal to 
-a single instruction cache of a GPU core prior to sharing. 
-The hit rate of the cache may drop when the instruction cache is not
-large enough to satisfy the demands from all the cores sharing the cache.
-However, the performance penalty should not be as dramatic as the reduction in area
-because of the instruction redundancy amongst the GPU cores. 
-The expected performance of this optimization scheme is shown in Figure \ref{AreaEff}.
-Reducing the cache area while minimizing the performance degradation improves the
-efficiency of the chip.
-
-
 \subsection{Benchmarks}
-Describe benchmarks used \jbs{Akhil in charge.}
 
-Several benchmark programs were used in this project. 
-These benchmarks included STO, RAY, NQU, LPS, LIB, CP and BFS. 
+We used benchmarks provided by the standard GPGPU-Sim distribution,
+including STO, RAY, NQU, LPS, LIB, CP and BFS.
 In order to determine which of the aforementioned benchmarks would be
 most useful for the purposes of our project, we performed an
 experiment in which the performance of the benchmarks was examined as
