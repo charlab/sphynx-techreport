@@ -82,25 +82,30 @@ However, these variables are ignored for this study, because we expect
 them to have little impact on the hit and stall rate of the
 instruction cache, which are the primary metrics of interest.
 
-\subsection{Benchmarks}
+\subsection{Preliminary Results}
 
-We used benchmarks provided by the standard GPGPU-Sim distribution,
-including STO, RAY, NQU, LPS, LIB, CP and BFS.
-In order to determine which of the aforementioned benchmarks would be
-most useful for the purposes of our project, we performed an
-experiment in which the performance of the benchmarks was examined as
-a function of the number of cores used in the available GTX580
-architecture. 
-The number of cores was varied between 1 and 16 (the maximum number of
-cores available on the GTX580). 
-Then the miss and stall rate was noted for each different
-architectural configuration. 
-Figure \ref{fig:missStalls} shows the results of our experiment. 
+We used benchmarks provided by the standard GPGPU-Sim distribution
+to validate our second method for sharing instruction caches by
+keeping the cache the same but increasing the number of threads that
+share that cache.
+This means varying the number of SMs per instruction cache from 1 to
+16 (the maximum number of cores available on the GTX580).
+Note that since each SM can have up to 48 warps, the number of
+simultaneously executing threads sharing the same instruction cache is
+much larger than the SM count.
+The results can be seen in Figures~\ref{fig:missStalls}
+and~\ref{fig:missStallsZoomed}. 
+As expected, the miss rate increases slightly in most cases by the
+increased pressure on the shared cache.
+A couple benchmarks were more problematic and resulted in up to nearly
+a 45\% miss rate when shared by 16 threads.
+We provide observations about those benchmarks in
+Section~\ref{sec:benchmarks}.
 
-\begin{figure}[b!]
+\begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks.png}
-\caption{Miss and Stall Rates for Benchmark Programs with the GTX580
+\caption{Simulated Miss and Stall Rates
 \jbs{Are the numbers (1-4) the same here as for
   Figure~\ref{HitImprov}? Why is this miss rate when the others are
 hit rate? We should unify the presentation.}
@@ -108,54 +113,92 @@ hit rate? We should unify the presentation.}
 \label{fig:missStalls}
 \end{figure}
 
-\begin{figure}[b!]
+\begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks_zoomed.png}
-\caption{Miss and Stall Rates for Benchmark Programs with GTX580 (Zoomed In) }
+\caption{Simulated miss and stall rates (zoomed in) }
 \label{fig:missStallsZoomed}
 \end{figure}
 
-Figure \ref{fig:missStallsZoomed} is a zoomed in version of
-\ref{fig:missStalls} included to enable better understanding of the
-results with lower miss rates. 
+For the cases where the miss rate become unacceptable under increased
+sharing, we should instead allow for the cache to also increase in
+capacity. 
+However, capacity alone will only affect the miss rate reported from
+the simulations.
+The stall rate represents the percentage of cache accesses that fail
+due to the increased pressure on the cache from sharing without
+increasing the available read parallelism.
+We expect that simply allowing for independent banks of the
+instruction cache to be accessed independently would overcome this
+limitation, but we have not yet simulated this approach.
+However, other high-level simulation has shown this kind of
+instruction cache banking scheme to be potentially
+effective~\cite{kopta10}. 
 
-The benchmark STO is mostly unaffected by this variation in the number of cores and RAY has a much higher
-stall rate (indicating more reservation fails than misses) than its
-miss rates, and is evidently more susceptible to the aforementioned change. 
+% can we include results for the increased cache size tests?
 
-RAY had more variability in how it was affected by the number of cores.
+%% The performed simulations point to several factors that may account 
+%% for the outcomes seen with each approach. Parameters that are expected 
+%% to affect instruction cache performance include the number of cores 
+%% shared, associativity, parallelism, and cache size.
 
-In order to explain the reasons behind the results shown in Figures
-\ref{fig:missStalls} and \ref{fig:missStallsZoomed}, we examined the
-degree of parallelism of RAY and CP.
+%% The first method, varying the number of cores sharing a cache while 
+%% keeping the total cache size constant, was expected to improve the hit 
+%% rate. As the number of cores sharing the cache increased, the miss rate 
+%% and stall rate both increased, with the later increasing more rapidly 
+%% due to the higher number of reservation fails. While the hit rate may 
+%% have improved, there was an overall trend of increased reservation fails 
+%% because the cache was preoccupied with instructions from the greater 
+%% number of cores. As an exception to this, CP demonstrated a balance as 
+%% the stall rate decreased going from 8 cores to 16 cores sharing the 
+%% cache. This was most likely due to the higher level of parallelism that 
+%% CP had in comparison to the other benchmarks. Meanwhile, smaller programs 
+%% remained unaffected more often than larger benchmarks.
 
+%% The second approach entailed reducing the total cache size by keeping 
+%% the size of each individual instruction cache constant when merging the 
+%% cores that share each one. The reduction in area of the now shared cache 
+%% allowed duplicate instructions to be accessed more quickly. This 
+%% affected benchmarks with many reused instructions and is expected to 
+%% provide space to be used for other caches.
+
+%% Overall, these methods appear to perform best on multi-threaded 
+%% applications with many reused instructions. Meanwhile, for benchmarks 
+%% with higher hit rates to begin with, and thus less reservation fails, 
+%% this method made less of an impact.
+
+\subsection{Benchmarks}
+\label{sec:benchmarks}
+Figure~\ref{fig:missStalls} shows the results of our experiment
+varying from 1 to 16 the number of SMs per instruction cache with
+Figure~\ref{fig:missStallsZoomed} showing a zoomed in version of the
+same data.
+The benchmark STO is mostly unaffected by this variation in the number
+of cores and RAY has a much higher stall rate (indicating more
+reservation fails than misses) than its miss rates, and is evidently
+more sensative to increased sharing.
+In order to explain the reasons behind the results, we examine the
+degree of parallelism of RAY and CP since they demonstrate drastically
+different instruction cache behavior in the results while having a
+similar number of instructions.
 The degree of parallelism is a representation of the number of software
 work elements that each program issues to the GPU when executing in
 hardware. 
-Calculations on the number of issued work elements is a representation of the level of parallelism employed by
-2 programs which we found interesting as per our previous results.
 
 \emph{CP (Coulombic Potential)}
 
-Given a standard configuration, CP issues a high number of thread blocks -- a representation of the high degree of parallelism that CP takes advantage of.
+Given a standard configuration, CP issues a high number of thread
+blocks -- a representation of the high degree of parallelism that CP
+utilizes.
 
-The reason only the parallelism of CP and RAY were examined was that
-from a preliminary inspection, they seemed to having a desired
-combination of parallelism and size of instruction set. 
+\emph{Ray (Ray Tracer)}
 
-From all the aforementioned results, it was clear that RAY was the
-most interesting bechmark. 
-This was because it had the highest number of PTX instructions issued
-and was also significatly parallel. 
+RAY was the most interesting bechmark because it had the highest
+number of PTX instructions issued and was also significatly parallel. 
 Moreover, the fact that the degree of parallelism of RAY could be
-increased easily by modifying the CUDA program, we nominated RAY as
-our most significant benchmark program.
- 
-Increasing the degree of parallelism in software entailed changing the
-image size that the Ray Tracer would operate on.
- 
-By increasing the size of the picture to 512 by 512, we made RAY issue a much higher number of thread blocks per unit time. 
-
+increased easily by modifying the parameters to the CUDA program.
+By increasing the size of the picture to 512 by 512, we made RAY issue
+a much higher number of thread blocks per unit time. 
 This ensured that the RAY benchmark was executing as parallel in
 software as the Coulombic Potential benchmark in the number of work
 elements that it was issuing. 
@@ -167,35 +210,3 @@ amount of space in the instruction cache (and hence would not be
 entirely resident in the instruction cache) AND would issue those
 instructions with a high degree of parallelism.
 
-\subsection{Preliminary Results}
-\jbs{Fabiha in charge}
-
-The performed simulations point to several factors that may account 
-for the outcomes seen with each approach. Parameters that are expected 
-to affect instruction cache performance include the number of cores 
-shared, associativity, parallelism, and cache size.
-
-The first method, varying the number of cores sharing a cache while 
-keeping the total cache size constant, was expected to improve the hit 
-rate. As the number of cores sharing the cache increased, the miss rate 
-and stall rate both increased, with the later increasing more rapidly 
-due to the higher number of reservation fails. While the hit rate may 
-have improved, there was an overall trend of increased reservation fails 
-because the cache was preoccupied with instructions from the greater 
-number of cores. As an exception to this, CP demonstrated a balance as 
-the stall rate decreased going from 8 cores to 16 cores sharing the 
-cache. This was most likely due to the higher level of parallelism that 
-CP had in comparison to the other benchmarks. Meanwhile, smaller programs 
-remained unaffected more often than larger benchmarks.
-
-The second approach entailed reducing the total cache size by keeping 
-the size of each individual instruction cache constant when merging the 
-cores that share each one. The reduction in area of the now shared cache 
-allowed duplicate instructions to be accessed more quickly. This 
-affected benchmarks with many reused instructions and is expected to 
-provide space to be used for other caches.
-
-Overall, these methods appear to perform best on multi-threaded 
-applications with many reused instructions. Meanwhile, for benchmarks 
-with higher hit rates to begin with, and thus less reservation fails, 
-this method made less of an impact.
