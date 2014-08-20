@@ -47,12 +47,13 @@ In this approach, when multiple cores are configured to share the same
 instruction cache, the previous cache that existed with each core are
 merged together to form larger caches. 
 The increased sized of the cache may result in degredation in access
-time, but in return, the hit rate of the cache is improved. 
+time, but in return, the hit rate of the cache should improve due to
+the larger cache. 
 The hit rate of the cache is expected to improve greatly when the size
-of initial cache is doubled or tripled, but there will be less
-improvement when the hit rate at a high level. 
-The expected improvement in cache performance for keeping aggregate cache size 
-constant is shown in Figure~\ref{HitImprov}. 
+of cache is doubled or tripled. However, we expect diminishing returns
+for higher scaling. 
+These projected improvement in cache performance for keeping aggregate cache size 
+constant is reflected in Figure~\ref{HitImprov}. 
 
 
 \begin{figure}[t]
@@ -76,16 +77,18 @@ high as cache area is reduced. }
 \end{figure}
 
 
-The second approach is to reduce the total size of the cache by
-keeping the size of individual instruction cache constant. 
+The second optimization approach is to reduce the total size 
+of the cache by keeping the size of individual instruction cache constant. 
 In this approach, rather than merging the shared caches together and 
 creating one large cache, the size of the shared cache is equal to 
 a single instruction cache of a GPU core prior to sharing. 
 The hit rate of the cache may drop when the instruction cache is not
-large enough to satisfy all the cores sharing the cache, but this drop
-in hit rate is expected to be less than the reduction in area due to
-the instruction redundancy between the shared cores.
+large enough to satisfy the demands from all the cores sharing the cache.
+However, the performance penalty should not be as dramatic as the reduction in area
+because of the instruction redundancy amongst the GPU cores. 
 The expected performance of this optimization scheme is shown in Figure \ref{AreaEff}.
+Reducing the cache area while minimizing the performance degradation improves the
+efficiency of the chip.
 
 
 \subsection{Benchmarks}
