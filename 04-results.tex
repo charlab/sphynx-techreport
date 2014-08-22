@@ -12,12 +12,12 @@ The increase will be limited by the working set of the application.
 We project improvement in cache performance for this approach in
 Figure~\ref{HitImprov}. 
 
-\begin{figure}[b]
-\centering
-\includegraphics[width=\columnwidth]{graphics/HitRateImprov.png}
-\caption{Projected instruction cache hit rate with fixed total cache size and increased sharing}
-\label{HitImprov}
-\end{figure}
+% \begin{figure}[b]
+% \centering
+% \includegraphics[width=\columnwidth]{graphics/HitRateImprov.png}
+% \caption{Projected instruction cache hit rate with fixed total cache size and increased sharing}
+% \label{HitImprov}
+% \end{figure}
 
 The second method is to reduce the total storage required for
 instruction cache data arrays while allowing at most a minor
@@ -40,6 +40,7 @@ which should improve the efficiency of the chip.
 \label{AreaEff}
 \end{figure}
 
+
 \subsection{Setup}
 
 We use GPGPU-Sim to analyze the effectiveness of our design because of
@@ -53,17 +54,54 @@ configuration for a NVIDIA GTX580 GPU, which we used for our study.
 The GTX580 contains 16 streaming multiprocessors with the NVIDIA Fermi
 architecture. 
 In GPGPU-Sim, each CUDA streaming multiprocessor is represented as a
-single SIMT core. 
+single SIMT core, with all the SIMT cores placed within a single SIMT cluster. 
 Each streaming multiprocressor can have up to 48 warps, with 32
-threads per warp (See Figure \ref{GTX580}). 
+threads per warp (See Figure \ref{table:gpuconfig}). 
 All sixteen SIMT cores share unified 786KB L2 cache. 
 
-\begin{figure}[b]
-\centering
-\includegraphics[width=\columnwidth]{graphics/GTX580.jpg}
-\caption{Block Diagram of NVIDIA GTX580~\cite{gf100}}
-\label{GTX580}
-\end{figure}
+% \begin{figure}[b]
+% \centering
+% \includegraphics[width=\columnwidth]{graphics/GTX580.jpg}
+% \caption{Block Diagram of NVIDIA GTX580~\cite{gf100}}
+% \label{GTX580}
+% \end{figure}
+
+\begin{table}[ht]
+\caption{GTX580 Configuration in GPGPU-Sim}
+\begin{tabular}{l|c}
+\hline\hline
+SIMT cluster count & 1 \textbf{/} 2 \textbf{/} 4 \textbf{/} 8 \textbf{/} 16  \\
+\hline
+Cores per cluster & 1 \\
+\hline
+Memory controller count & 6 \\
+\hline
+Subpartition per mem. & 2 \\ 
+\hline
+Shader registers & 32768*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 ) \\
+\hline
+Threads in pipeline & 1536*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 ) \\
+\hline
+Threads per warp & 32 \\
+\hline
+Scheduler per core & 2*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 )\\
+\hline
+CTA per core & 8*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 )\\
+\hline
+Core clock & 700 MHz\\
+\hline
+L2 \& Interconnect clock & 700 MHz\\
+\hline
+DRAM clock & 924 MHz\\
+\hline
+Topology & 13 \textbf{/} 14 \textbf{/} 16 \textbf{/} 20 \textbf{/} 28 \\
+\hline
+L1 Instruction Cache & 4 sets : 128B blocks : 4-way \\
+\bottomrule[1pt]
+\end{tabular}
+\caption*{\textmd{GPGPU-Sim configurations used in simulation. Any parameter not listed in the table was kept the same from the original GTX480 configuration that is included in the GPGPU-Sim source code.}}
+\label{table:gpuconfig}
+\end{table}
 
 In the Fermi architecture, each streaming multiprocessor has
 its own distinct L1 cache. 
