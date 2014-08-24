@@ -135,7 +135,7 @@ and~\ref{fig:missStallsZoomed}.
 As expected, the miss rate increases slightly in most cases by the
 increased pressure on the shared cache.
 A couple benchmarks were more problematic and resulted in up to nearly
-a 45\% miss rate when shared by 16 threads.
+a 45\% stall rate when shared by 16 threads.
 We provide observations about those benchmarks in
 Section~\ref{sec:benchmarks}.
 
@@ -210,40 +210,46 @@ Figure~\ref{fig:missStalls} shows the results of our experiment
 varying from 1 to 16 the number of SMs per instruction cache with
 Figure~\ref{fig:missStallsZoomed} showing a zoomed in version of the
 same data.
-The benchmark STO is mostly unaffected by this variation in the number
-of cores and RAY has a much higher stall rate (indicating more
-reservation fails than misses) than its miss rates, and is evidently
-more sensative to increased sharing.
-In order to explain the reasons behind the results, we examine the
-degree of parallelism of RAY and CP since they demonstrate drastically
-different instruction cache behavior in the results while having a
-similar number of instructions.
-The degree of parallelism is a representation of the number of software
-work elements that each program issues to the GPU when executing in
-hardware. 
+The benchmark STO is mostly unaffected by the increase in number of cores
+accessing the same small instruction cache, and the benchmark shows similar
+level of miss and stall rate. 
+On the other hand, RAY exhibits a much higher stall rate than its miss rates in Figure~\ref{fig:missStalls}, 
+and is evidently more sensative to increased sharing of the cache.
+Higher stall rate compared to miss rate occurs when the cache is not able to 
+respond to the CPU on time, even when there is a cache hit.
+The rapid increase in stall rate in RAY and the relatively modest increase in miss rate 
+suggests the cache is not able to handle the rapid increase in the amount of requests coming from the cores,
+and has to stall even when there is a hit.
+As RAY showed to have the largest number of PTX instructions amongst our set of benchmarks,
+the high miss and stall rate is reflective of the high level of instruction cache utilization
+by the benchmark. 
 
-\emph{CP (Coulombic Potential)}
+Similar relationship between stall rate and miss rate are also evident in 
+benchmarks BFS, CP, and LPS. However, the miss rate of less than 1\% in these benchmarks
+suggests that the benchmarks are largely affected by initial compulsary misses, and operate
+largely on a small set of instructions.
 
-Given a standard configuration, CP issues a high number of thread
-blocks -- a representation of the high degree of parallelism that CP
-utilizes.
+% \emph{CP (Coulombic Potential)}
 
-\emph{Ray (Ray Tracer)}
+% Given a standard configuration, CP issues a high number of thread
+% blocks -- a representation of the high degree of parallelism that CP
+% utilizes.
 
-RAY was the most interesting bechmark because it had the highest
-number of PTX instructions issued and was also significatly parallel. 
-Moreover, the fact that the degree of parallelism of RAY could be
-increased easily by modifying the parameters to the CUDA program.
-By increasing the size of the picture to 512 by 512, we made RAY issue
-a much higher number of thread blocks per unit time. 
-This ensured that the RAY benchmark was executing as parallel in
-software as the Coulombic Potential benchmark in the number of work
-elements that it was issuing. 
-Given that the RAY CUDA file issues more instructions in its core
-computation that CP does, and that a lot of its instructions (CUDA
-instructions) seem to be computationally more expensive, RAY can now
-be treated as both a long program which would occupy a significant
-amount of space in the instruction cache (and hence would not be
-entirely resident in the instruction cache) AND would issue those
-instructions with a high degree of parallelism.
+% \emph{Ray (Ray Tracer)}
 
+% RAY was the most interesting bechmark because it had the highest
+% number of PTX instructions issued and was also significatly parallel. 
+% Moreover, the fact that the degree of parallelism of RAY could be
+% increased easily by modifying the parameters to the CUDA program.
+% By increasing the size of the picture to 512 by 512, we made RAY issue
+% a much higher number of thread blocks per unit time. 
+% This ensured that the RAY benchmark was executing as parallel in
+% software as the Coulombic Potential benchmark in the number of work
+% elements that it was issuing. 
+% Given that the RAY CUDA file issues more instructions in its core
+% computation that CP does, and that a lot of its instructions (CUDA
+% instructions) seem to be computationally more expensive, RAY can now
+% be treated as both a long program which would occupy a significant
+% amount of space in the instruction cache (and hence would not be
+% entirely resident in the instruction cache) AND would issue those
+% instructions with a high degree of parallelism.
