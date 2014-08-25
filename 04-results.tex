@@ -206,10 +206,10 @@ effective~\cite{kopta10}.
 
 \subsection{Benchmarks}
 \label{sec:benchmarks}
-Figure~\ref{fig:missStalls} shows the results of our experiment
-varying from 1 to 16 the number of SMs per instruction cache with
-Figure~\ref{fig:missStallsZoomed} showing a zoomed in version of the
-same data.
+The result of varying the number of SM sharing from 1 to 16 is shown in Figure~\ref{fig:missStalls}, and Figure~\ref{fig:missStallsZoomed} shows 
+a zoomed in version of the same data. Total of seven benchmarks were
+tested, and they all came with the GPGPU-Sim source code \cite{bakhodayuan09}.
+
 The benchmark STO is mostly unaffected by the increase in number of cores
 accessing the same small instruction cache, and the benchmark shows similar
 level of miss and stall rate. 
