@@ -27,7 +27,7 @@ degredation in hit rate.
 We consider an approach where the instruction cache each processor
 sees remains fixed but the number of threads sharing each cache is
 increased. 
-We expect that the hit rate of the cache may drop when the instruction
+We expect that the miss rate of the cache will increase when the instruction
 cache is not large enough to satisfy the demands from all the cores
 sharing the cache.
 However, the performance penalty should not be as dramatic as the
@@ -38,7 +38,7 @@ which should improve the efficiency of the chip.
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/AreaEff.png}
-\caption{Projected cache area and hit rate due to increased sharing}
+\caption{Projected cache area and miss rate due to increased sharing}
 \label{AreaEff}
 \end{figure}
 
@@ -142,10 +142,7 @@ Section~\ref{sec:benchmarks}.
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks.png}
-\caption{Simulated Miss and Stall Rates
-\jbs{Are the numbers (1-4) the same here as for
-  Figure~\ref{HitImprov}? Why is this miss rate when the others are
-hit rate? We should unify the presentation.}
+\caption{Simulated Miss and Stall Rates}
 }
 \label{fig:missStalls}
 \end{figure}
