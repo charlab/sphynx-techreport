@@ -203,7 +203,7 @@ effective~\cite{kopta10}.
 \subsection{Benchmarks}
 \label{sec:benchmarks}
 The result of varying the number of SM sharing from 1 to 16 is shown in Figure~\ref{fig:missStalls}, and Figure~\ref{fig:missStallsZoomed} shows 
-a zoomed in version of the same data. Total of seven benchmarks were
+a zoomed in version of the same data. A total of seven benchmarks were
 tested, and they all came with the GPGPU-Sim source code \cite{bakhodayuan09}.
 
 The benchmark STO is mostly unaffected by the increase in number of cores
@@ -216,6 +216,7 @@ respond to the CPU on time, even when there is a cache hit.
 The rapid increase in stall rate in RAY and the relatively modest increase in miss rate 
 suggests the cache is not able to handle the rapid increase in the amount of requests coming from the cores,
 and has to stall even when there is a hit.
+
 As RAY showed to have the largest number of PTX instructions amongst our set of benchmarks,
 the high miss and stall rate is reflective of the high level of instruction cache utilization
 by the benchmark. 
