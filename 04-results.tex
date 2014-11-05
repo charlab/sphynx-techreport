@@ -32,28 +32,32 @@ cache is not large enough to satisfy the demands from all the cores
 sharing the cache.
 However, the performance penalty should not be as dramatic as the
 reduction in area when all threads run the same application.
-Figure \ref{AreaEff} shows our rough expectations for this approach
+Figure \ref{AreaEff} shows our hypothesis for this approach
 which should improve the efficiency of the chip.
+Note that the scale on the y-axis is omitted because the chart is included
+to build intuition of our hypothesis only and is not based on 
+any simulation or otherwise realistic result.
+\jbs{This sentence needs work.}
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/AreaEff.png}
-\caption{Projected cache area and miss rate due to increased sharing}
+\caption{Projected cache area and miss rate due to increased sharing \jbs{units omitted because the numbers are made up}}
 \label{AreaEff}
 \end{figure}
 
 
 \subsection{Setup}
 
-We use GPGPU-Sim to analyze the effectiveness of our design because of
+We use GPGPU-Sim~\cite{bakhodayuan09} to analyze the effectiveness of our design because of
 its ability to simulate a large number of parallel processing cores.
-GPGPU-Sim~\cite{bakhodayuan09} is an open-source software package
+GPGPU-Sim is an open-source software package
 available to simulate GPU architecture. 
 It has been validated to be representative of performance on NVIDIA
 GPUs and provides a reasonable platform for testing alternate
-highly-parallel computer architectures, and provides a reference
-configuration for a NVIDIA GTX580 GPU, which we used for our study.
-The GTX580 contains 16 streaming multiprocessors with the NVIDIA Fermi
+highly-parallel computer architectures. 
+We use a reference configuration for a NVIDIA GTX580 GPU for our study.
+The GTX580 contains 16 streaming multiprocessors (SM) with the NVIDIA Fermi
 architecture. 
 In GPGPU-Sim, each CUDA streaming multiprocessor is represented as a
 single SIMT core, with all the SIMT cores placed within a single SIMT cluster. 
@@ -80,15 +84,15 @@ Memory controller count & 6 \\
 \hline
 Subpartition per mem. & 2 \\ 
 \hline
-Shader registers & 32768*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 ) \\
+Shader registers & 32768x(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 ) \\
 \hline
-Threads in pipeline & 1536*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 ) \\
+Threads in pipeline & 1536x(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 ) \\
 \hline
 Threads per warp & 32 \\
 \hline
-Scheduler per core & 2*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 )\\
+Scheduler per core & 2x(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 )\\
 \hline
-CTA per core & 8*(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 )\\
+CTA per core & 8x(16 \textbf{/} 8 \textbf{/} 4 \textbf{/} 2 \textbf{/} 1 )\\
 \hline
 Core clock & 700 MHz\\
 \hline
@@ -116,7 +120,7 @@ Other aspects of the architecture such as the bandwidth of shared L2
 cache could serve as a performance bottleneck for different cache
 designs. 
 However, these variables are ignored for this study, because we expect
-them to have little impact on the hit and stall rate of the
+them to have little impact on the hit and stall rates of the
 instruction cache, which are the primary metrics of interest.
 
 \subsection{Preliminary Results}
@@ -142,18 +146,18 @@ Section~\ref{sec:benchmarks}.
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks.png}
-\caption{Simulated Miss and Stall Rates}
+\caption{Simulated Miss and Stall Rates \jbs{what do the numbers mean?}}
 \label{fig:missStalls}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks_zoomed.png}
-\caption{Simulated miss and stall rates (zoomed in) }
+\caption{Simulated miss and stall rates (zoomed in) \jbs{what do the numbers mean?}}
 \label{fig:missStallsZoomed}
 \end{figure}
 
-For the cases where the miss rate become unacceptable under increased
+For the cases where the miss rate becomes unacceptable under increased
 sharing, we should instead allow for the cache to also increase in
 capacity. 
 However, capacity alone will only affect the miss rate reported from
@@ -210,7 +214,7 @@ The benchmark STO is mostly unaffected by the increase in number of cores
 accessing the same small instruction cache, and the benchmark shows similar
 level of miss and stall rate. 
 On the other hand, RAY exhibits a much higher stall rate than its miss rates in Figure~\ref{fig:missStalls}, 
-and is evidently more sensative to increased sharing of the cache.
+and is evidently more sensitive to increased sharing of the cache.
 Higher stall rate compared to miss rate occurs when the cache is not able to 
 respond to the CPU on time, even when there is a cache hit.
 The rapid increase in stall rate in RAY and the relatively modest increase in miss rate 

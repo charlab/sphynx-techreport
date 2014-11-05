@@ -18,20 +18,20 @@ some point in the future, a good example to consider today is the GPU,
 which already exposes hundreds to thousands of threads to the
 programmer. 
 
-Modern Graphics Processing Units (GPUs) are designed to have several
+Modern GPUs are designed to have several
 compute units to maximize throughput, and to expose these compute
 units for general purpose computation instead of only graphics
 applications.
 These compute units are compact, and designed to perform simple
 operations on a large set of data. 
 It is not feasible to implement techniques such as advanced branch
-prediction on these small compute units, beccause a single GPU unit
-can have upto a couple hundred of these compute units. 
+prediction on these small compute units, because a single GPU unit
+can have up to a couple hundred of these compute units. 
 To improve the instruction cache performance of GPUs, new solutions
 need to be developed in ways that maintain the compact and simplistic
 nature of the compute units. 
 Current GPU architectures are designed with individual L1 instruction
 cache for each compute unit of the GPU\cite{keckler11}. 
-It may be possible have multiple compute units share the same
+It may be possible to have multiple compute units share the same
 instruction cache without incurring serious performance or power
 penalties.
