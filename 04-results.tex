@@ -138,8 +138,8 @@ The results can be seen in Figures~\ref{fig:missStalls}
 and~\ref{fig:missStallsZoomed}. 
 As expected, the miss rate increases slightly in most cases by the
 increased pressure on the shared cache.
-A couple benchmarks were more problematic and resulted in up to nearly
-a 45\% stall rate when shared by 16 threads.
+A couple of benchmarks were more problematic, resulting in
+almost a 45\% stall rate when shared by 16 threads.
 We provide observations about those benchmarks in
 Section~\ref{sec:benchmarks}.
 
@@ -153,12 +153,12 @@ Section~\ref{sec:benchmarks}.
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks_zoomed.png}
-\caption{Simulated miss and stall rates (zoomed in) \jbs{what do the numbers mean?}}
+\caption{Simulated miss and stall rates (zoomed-in) \jbs{what do the numbers mean?}}
 \label{fig:missStallsZoomed}
 \end{figure}
 
 For the cases where the miss rate becomes unacceptable under increased
-sharing, we should instead allow for the cache to also increase in
+sharing, we should allow for the cache to increase in
 capacity. 
 However, capacity alone will only affect the miss rate reported from
 the simulations.
@@ -207,11 +207,11 @@ effective~\cite{kopta10}.
 \subsection{Benchmarks}
 \label{sec:benchmarks}
 The result of varying the number of SM sharing from 1 to 16 is shown in Figure~\ref{fig:missStalls}, and Figure~\ref{fig:missStallsZoomed} shows 
-a zoomed in version of the same data. A total of seven benchmarks were
+a zoomed-in version of the same data. A total of seven benchmarks were
 tested, and they all came with the GPGPU-Sim source code \cite{bakhodayuan09}.
 
 The benchmark STO is mostly unaffected by the increase in number of cores
-accessing the same small instruction cache, and the benchmark shows similar
+accessing the same small instruction cache, and the benchmark shows a similar
 level of miss and stall rate. 
 On the other hand, RAY exhibits a much higher stall rate than its miss rates in Figure~\ref{fig:missStalls}, 
 and is evidently more sensitive to increased sharing of the cache.
@@ -225,7 +225,7 @@ As RAY showed to have the largest number of PTX instructions amongst our set of 
 the high miss and stall rate is reflective of the high level of instruction cache utilization
 by the benchmark. 
 
-Similar relationship between stall rate and miss rate are also evident in 
+Similar relationships between stall rate and miss rate are also evident in 
 benchmarks BFS, CP, and LPS. However, the miss rate of less than 1\% in these benchmarks
 suggests that the benchmarks are largely affected by initial compulsary misses, and operate
 largely on a small set of instructions.
