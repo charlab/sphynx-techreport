@@ -10,7 +10,7 @@ program execution time can vary widely depending on the number of
 instruction cache misses~\cite{arnold94}. 
 In existing Graphics Processing Units (GPUs) and CPUs, each processor
 core has its own instruction cache. 
-A unified or shared instruction cache that is used by all, or many
+A unified or shared instruction cache that is used by many or all
 cores of a GPU or CPU has the potential to improve system performance
 and reduce power consumption.
 However, such a modification also results in increased traffic for the
@@ -21,19 +21,20 @@ performance and increasing power consumption.
 %We may want to clarify...
 
 In current computer architectures, the instruction caches are
-independent of one another, however since each processor uses the same
+independent of one another. 
+However, since each processor uses the same
 set of instructions, it is plausible that a shared instruction cache
 could introduce non-trivial improvements in performance. 
-Unified instruction cache(s) could reduce the number of compulsory
+Unified instruction caches could reduce the number of compulsory
 misses because an instruction previously executed by one streaming
 multiprocessor may be available for another streaming multiprocessor
-immediately rather than requiring an additional miss. 
+immediately rather than after an additional miss is serviced. 
 In addition to a fully unified instruction cache used across all
 processor cores, another possible solution could be to maintain
 multiple instruction caches, which are shared across a subset of all
 cores. 
 This architecture could allow the operating system to group together
 program threads based on similarity of instructions to maximize the
-benefit of shared instructions and minimized the conflicts across
+benefit of shared instructions and minimize the conflicts across
 threads. 
 
