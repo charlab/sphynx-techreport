@@ -35,14 +35,13 @@ reduction in area when all threads run the same application.
 Figure \ref{AreaEff} shows our hypothesis for this approach
 which should improve the efficiency of the chip.
 Note that the scale on the y-axis is omitted because the chart is included
-to build intuition of our hypothesis only and is not based on 
+to build intuition of the hypothesis only and is not based on 
 any simulation or otherwise realistic result.
-\jbs{This sentence needs work.}
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/AreaEff.png}
-\caption{Projected cache area and miss rate due to increased sharing \jbs{units omitted because the numbers are made up}}
+\caption{Hypothesis of area and miss rate for shared caches}
 \label{AreaEff}
 \end{figure}
 
@@ -105,7 +104,8 @@ Topology & 13 \textbf{/} 14 \textbf{/} 16 \textbf{/} 20 \textbf{/} 28 \\
 L1 Instruction Cache & 4 sets : 128B blocks : 4-way \\
 \bottomrule[1pt]
 \end{tabular}
-\caption*{\textmd{GPGPU-Sim configurations used in simulation. Any parameter not listed in the table was kept the same from the original GTX480 configuration that is included in the GPGPU-Sim source code.}}
+\caption*{GPGPU-Sim configurations used in simulation. 
+Any parameter not listed in the table matches the original GTX480 configuration included in the public release of GPGPU-Sim.}
 \label{table:gpuconfig}
 \end{table}
 
