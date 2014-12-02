@@ -105,7 +105,7 @@ L1 Instruction Cache & 4 sets : 128B blocks : 4-way \\
 \bottomrule[1pt]
 \end{tabular}
 \caption*{GPGPU-Sim configurations used in simulation. 
-Any parameter not listed in the table matches the original GTX480 configuration included in the public release of GPGPU-Sim.}
+Any parameter not listed in the table matches the original GTX580 configuration included in the public release of GPGPU-Sim.}
 \label{table:gpuconfig}
 \end{table}
 
@@ -146,15 +146,8 @@ Section~\ref{sec:benchmarks}.
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks.png}
-\caption{Simulated Miss and Stall Rates \jbs{what do the numbers mean?}}
+\caption{Simulated miss and stall rates for configurations in Table~\ref{table:gpuconfig}}
 \label{fig:missStalls}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks_zoomed.png}
-\caption{Simulated miss and stall rates (zoomed-in) \jbs{what do the numbers mean?}}
-\label{fig:missStallsZoomed}
 \end{figure}
 
 For the cases where the miss rate becomes unacceptable under increased
@@ -206,9 +199,12 @@ effective~\cite{kopta10}.
 
 \subsection{Benchmarks}
 \label{sec:benchmarks}
-The result of varying the number of SM sharing from 1 to 16 is shown in Figure~\ref{fig:missStalls}, and Figure~\ref{fig:missStallsZoomed} shows 
-a zoomed-in version of the same data. A total of seven benchmarks were
-tested, and they all came with the GPGPU-Sim source code \cite{bakhodayuan09}.
+The result of varying the number of SM sharing from 1 to 16 is shown in 
+Figure~\ref{fig:missStalls}, and Figure~\ref{fig:missStallsZoomed} shows 
+a zoomed-in version of the same data to show that even when the magnitude 
+of misses is very small, the expected trend is followed. 
+A total of seven benchmarks were
+tested, each available from the GPGPU-Sim source code \cite{bakhodayuan09}.
 
 The benchmark STO is mostly unaffected by the increase in number of cores
 accessing the same small instruction cache, and the benchmark shows a similar
@@ -229,6 +225,13 @@ Similar relationships between stall rate and miss rate are also evident in
 benchmarks BFS, CP, and LPS. However, the miss rate of less than 1\% in these benchmarks
 suggests that the benchmarks are largely affected by initial compulsary misses, and operate
 largely on a small set of instructions.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{graphics/miss_stalls_benchmarks_zoomed.png}
+\caption{Simulated miss and stall rates (zoomed-in Figure~\ref{fig:missStalls}) }
+\label{fig:missStallsZoomed}
+\end{figure}
 
 % \emph{CP (Coulombic Potential)}
 

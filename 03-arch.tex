@@ -45,17 +45,15 @@ workloads.
 The first approach to shared instruction caches would be to couple an
 instruction cache with a pair of processors as in
 Figure~\ref{fig:paired}. 
-This would have a small amount of routing overhead and allow for the
-operating system to intelligently schedule two threads that share
-instructions to these two processor cores in order to exploit this
-sharing. 
-\jbs{This next sentence seems really weird. What is it supposed to mean?}
-However, if an application wanted more sharing, the benefits beyond
-only two cores would be smaller.
-As a limit, a chip could be designed to share a single instruction
+This would require a small amount of routing overhead and allow for the
+operating system or programmer to intelligently schedule two threads 
+that share instructions to these two processor cores in order to exploit 
+the shared instruction cache.
+While sharing an instruction between two cores is one step towards shared
+caches, at its limit, a chip could be designed to share a single instruction
 cache among all processors on chip, shown with an example of only four
 processors in Figure~\ref{fig:shared}.
-For an arbitrary number of cores, this level of sharing could be
+For an arbitrary number of cores, the level of sharing could be
 scaled up or down to fit the applications and purpose of the
 architecture design.
 One could even imagine a design where assymetrical sharing is enabled
@@ -64,13 +62,17 @@ assigning the application threads to the appropriate cores to match
 the sharing to the hardware available.
 
 While our proposed technique is likely only beneficial in situations
-with highly parallel programs, it is likely that future systems will
+with highly parallel programs, it is probable that future systems will
 often run a few highly parallel workloads that can benefit from these
 advantages. 
-
-\jbs{Consider adding text about banked cache designs and how that
-  would increase parallel cache performance.}
- 
+A hybrid approach would allow some cores to efficiently process general 
+purpose applications while cores with shared instruction caches execute
+parallel single program workloads.
+When different threads within a parallel application diverge in program flow,
+it may be useful to further design the instruction caches to have multiple
+independent banks that can be accessed in parallel.
+We believe the multi-banked approach to be the most beneficial, however we do not 
+present results or analysis of multi-banked caches in this work. 
 
 
 \begin{figure}[ht!]

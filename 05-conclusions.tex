@@ -1,12 +1,19 @@
 \section{Conclusions}
 
 The proposed instruction cache designs provide a possible solution to 
-increase the efficiency of instruction cache in GPUs. 
-The sharing of instruction cache amongst multiple GPU cores can help 
-designers optimize for less area and better performance. 
+increase the efficiency of instruction cache in parallel processors, 
+in particular processors whose primary workload includes single programs
+with many parallel threads executing the same code. 
+The sharing of instruction cache amongst multiple cores can help 
+chip designers optimize for less area without compromising performance. 
 The extra space recovered from the sharing of instruction cache among 
-multiple GPU cores can be repurposed to improve other parts of the 
-GPU, such as a larger data cache.
+multiple cores can be repurposed to improve other parts of the 
+chip, such as a larger data cache(s) or additional computation units.
+We showed results for GPU workloads because they typically exhibit much 
+higher levels of parallelism than CPUs while still executing a single 
+application.
+GPUs traditionally only expose multi-program workload capabilities 
+using corse-grained time-sharing among processes.
 
 For future work, the proposed instruction cache design should be 
 simulated and tested to verify the affectiveness of the design. 
