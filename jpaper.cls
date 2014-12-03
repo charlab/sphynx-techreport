@@ -184,18 +184,18 @@
 \setlength{\marginparwidth}{0.65in}
 
 % Link and URL formatting.
-\iftoggle{jp@hyperref}{%
-  \RequirePackage{hyperref}
-  \hypersetup{%
-    unicode=true,%
-    pdfstartview={FitH},%
-    colorlinks=true,%
-    %citecolor=black,%
-    %filecolor=black,%
-    %linkcolor=black,%
-    %urlcolor=black
-}}{}
-\RequirePackage{url}
+%\iftoggle{jp@hyperref}{%
+%  \RequirePackage{hyperref}
+%  \hypersetup{%
+%    unicode=true,%
+%    pdfstartview={FitH},%
+%    colorlinks=true,%
+%    %citecolor=black,%
+%    %filecolor=black,%
+%    %linkcolor=black,%
+%    %urlcolor=black
+%}}{}
+%\RequirePackage{url}
 
 % Scientific units.
 \RequirePackage[squaren]{SIunits}
